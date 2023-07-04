@@ -1,24 +1,20 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import ru.netology.javaqa.javaqa5.service.VacationService;
 
 public class VacationServiceTest {
 
-    @Test
-    public void shouldCalcLowVacation1() {
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/Vacation.csv")
+    public void shouldCalcLowVacation(int expected, int income, int expense, int threshold) {
         VacationService service = new VacationService();
-        int expected = 3;
-        int actual = service.calculate(10_000, 3_000, 20_000);
+
+        int actual = service.calculate(income, expense, threshold);
 
         Assertions.assertEquals(expected, actual);
     }
-
-    @Test
-    public void shouldCalcVacation2() {
-        VacationService service = new VacationService();
-        int expected = 2;
-        int actual = service.calculate(100_000, 60_000, 150_000);
-
-        Assertions.assertEquals(expected, actual);
-    }
+    
 }
